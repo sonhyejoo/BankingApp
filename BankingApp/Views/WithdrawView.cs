@@ -1,31 +1,43 @@
-﻿namespace BankingApp.Views;
+﻿using BankingApp.Controllers;
+using BankingApp.Interfaces;
 
-public static class WithdrawView
+namespace BankingApp.Views;
+
+public class WithdrawView: IView<(decimal, decimal)>
 {
-    internal static void WithdrawBanner()
+    public void Show()
     {
-        Console.Clear();
-        Console.WriteLine("Withdraw Menu: \n");
+        Console.WriteLine("\nWithdraw Menu: \n");
+        Console.WriteLine("Please enter account id: ");
+        var userInput = Console.ReadLine();
+        if (BankController.Instance.TryGetAccount(userInput))
+        {
+            Console.WriteLine("Please enter withdrawal amount: ");
+            userInput = Console.ReadLine();
+            if (BankController.Instance.TryParseAmount(userInput, out var amount))
+            {
+                if (AccountController.Instance.TryWithdraw(amount, out var amountAndBalance))
+                {
+                    Success(amountAndBalance);
+                    
+                    return;
+                }
+            }
+        }
+        
+        Failure();
     }
 
-    internal static string? WithdrawAmount()
+    public void Success((decimal, decimal) amountAndBalance)
     {
-        Console.WriteLine("Please enter withdraw amount: ");
-        return Console.ReadLine();
+        (decimal amount, decimal balance) = amountAndBalance;
+        Console.WriteLine($"{amount:C} successfully withdrawn.");
+        Console.WriteLine($"Current balance: ${balance:C}");
     }
 
-    internal static void WithdrawFailInvalidInput()
+    public void Failure()
     {
-        Console.WriteLine("Unsuccessful. Withdrawal amount must be a valid decimal value.");
+        Console.WriteLine("Withdrawal unsuccessful.");
     }
 
-    internal static void WithdrawFailInvalidAmount()
-    {
-        Console.WriteLine("Unsuccessful. Withdrawal amount must be greater than 0 and less than current balance. ");
-    }
-
-    internal static void WithdrawSuccess(decimal withdrawAmount)
-    {
-        Console.WriteLine($"${withdrawAmount} successfully withdrawn.");
-    }
 }

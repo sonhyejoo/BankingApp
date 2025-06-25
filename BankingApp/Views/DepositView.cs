@@ -1,31 +1,42 @@
-﻿namespace BankingApp.Views;
+﻿using BankingApp.Controllers;
+using BankingApp.Interfaces;
 
-public static class DepositView
+namespace BankingApp.Views;
+
+public class DepositView: IView<(decimal, decimal)>
 {
-    internal static void DepositBanner()
+    public void Show()
     {
-        Console.Clear();
-        Console.WriteLine("Deposit Funds: \n");
+        Console.WriteLine("\nDeposit Funds: \n");
+        Console.WriteLine("Please enter account id: ");
+        var userInput = Console.ReadLine();
+        if (BankController.Instance.TryGetAccount(userInput))
+        {
+            Console.WriteLine("Please enter deposit amount: ");
+            userInput = Console.ReadLine();
+            if (BankController.Instance.TryParseAmount(userInput, out var amount))
+            {
+                if (AccountController.Instance.TryDeposit(amount, out var amountAndBalance))
+                {
+                    Success(amountAndBalance);
+                    
+                    return;
+                }
+            }
+        }
+        
+        Failure();
     }
 
-    internal static string? DepositAmount()
+    public void Success((decimal, decimal) values)
     {
-        Console.WriteLine("Please enter deposit amount: ");
-        return Console.ReadLine();
-    }
-
-    internal static void DepositFailInvalidInput()
-    {
-        Console.WriteLine("Unsuccessful. Deposit amount must be a valid decimal value.");
-    }
-
-    internal static void DepositFailInvalidAmount()
-    {
-        Console.WriteLine("Unsuccessful. Deposit amount must be greater than 0.");
-    }
-
-    internal static void DepositSuccess(decimal depositAmount)
-    {
+        var (depositAmount, balance) = values;
         Console.WriteLine($"${depositAmount} successfully deposited.");
+        Console.WriteLine($"Current balance: {balance:C}");
+    }
+    
+    public void Failure()
+    {
+        Console.WriteLine("Deposit unsuccessful.");
     }
 }

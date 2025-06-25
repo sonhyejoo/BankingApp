@@ -1,41 +1,59 @@
-﻿namespace BankingApp.Views;
+﻿using BankingApp.Controllers;
+using BankingApp.Interfaces;
 
-public static class TransferView
+namespace BankingApp.Views;
+
+public class TransferView: IView<(decimal, decimal, decimal)>
 {
-    internal static void TransferBanner()
-    {
-        Console.Clear();
-        Console.WriteLine("Transfer Funds Menu: \n");
-        Console.WriteLine("Sender's account information: ");
-    }
-
-    internal static void TransferReceiveAccountPrompt()
-    {
-        Console.WriteLine("Receiving account information: ");
-    }
-
-    internal static string? TransferAmount()
-    {
-        Console.WriteLine("Please enter transfer amount: ");
-        return Console.ReadLine();
-    }
-
-    internal static void TransferFailInvalidInput()
-    {
-        Console.WriteLine("Unsuccessful. Transfer amount must be a valid decimal value.");
-    }
-
-    internal static void TransferFailInvalidAmount()
-    {
-        Console.WriteLine("Unsuccessful. Transfer amount must be greater than 0 and less than current balance of sender's account. ");
-    }
-
-    internal static void TransferSuccess(decimal transferAmount, decimal senderBalance, decimal receiveBalance)
+    internal static void Success(decimal transferAmount, decimal senderBalance, decimal receiveBalance)
     {
         Console.WriteLine($"\n${transferAmount} successfully transferred.");
         Console.WriteLine("Updated sender and receiving accounts shown below, respectively.");
         Console.WriteLine("Current balance of sender is: $" +  senderBalance);
         Console.WriteLine("Current balance of recipient is: $" +  receiveBalance);
 
+    }
+
+    public void Show()
+    {
+        Console.WriteLine("\nTransfer Funds Menu: \n");
+        Console.WriteLine("Sender's account information: ");
+        Console.WriteLine("Please enter sender id: ");
+        var userInput = Console.ReadLine();
+        if (BankController.Instance.TryGetAccount(userInput))
+        {
+            Console.WriteLine("Please enter receiver id: ");
+            userInput = Console.ReadLine();
+            if (BankController.Instance.TryGetAccount(userInput))
+            {
+                Console.WriteLine("Please enter transfer amount: ");
+                userInput = Console.ReadLine();
+                if (BankController.Instance.TryParseAmount(userInput, out var amount))
+                {
+                    if (AccountController.Instance.TryTransfer(amount, out var amountAndBalances))
+                    {
+                        Success(amountAndBalances);
+
+                        return;
+                    }
+                }
+            }
+        }
+        
+        Failure();
+
+    }
+    
+    public void Success((decimal, decimal, decimal) amountAndBalances)
+    {
+        (decimal amount, decimal senderBalance, decimal receiverBalance) = amountAndBalances;
+        Console.WriteLine($"{amount:C} successfully transferred.");
+        Console.WriteLine($"Current sender balance: {senderBalance:C}");
+        Console.WriteLine($"Current receiver balance: {receiverBalance:C}");
+    }
+
+    public void Failure()
+    {
+        Console.WriteLine("Transfer unsuccessful.");
     }
 }

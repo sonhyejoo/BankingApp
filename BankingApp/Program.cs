@@ -4,36 +4,46 @@ using BankingApp.Controllers;
 using BankingApp.Views;
 
 bool closeApp = false;
+var mainMenuView = new MainMenuView();
 while (!closeApp)
 {
-    View.MainMenu();
+    mainMenuView.Show();
     Console.WriteLine("Type your selection: ");
     string? input = Console.ReadLine();
 
     switch (input)
     {
         case "1":
-            Controllers.CreateAccountController();
+            var createView = new CreateView();
+            createView.Show();
             break;
         case "2":
-            Controllers.DepositController();
+            var depositView = new DepositView();
+            depositView.Show();
             break;
         case "3":
-            Controllers.WithdrawController();
+            var withdrawView = new WithdrawView();
+            withdrawView.Show();
             break;
         case "4":
-            Controllers.BalanceController();
+            var checkBalanceView = new CheckBalanceView();
+            checkBalanceView.Show();
             break;
         case "5":
-            Controllers.TransferController();
+            var transferView = new TransferView();
+            transferView.Show();
             break;
         case "q":
             Console.WriteLine("Shutting down.");
             closeApp = true;
             break;
         default:
-            Console.WriteLine("Please enter a valid selection. Press any key to try again.");
-            Console.ReadKey();
+            Console.WriteLine("Please enter a valid selection.");
             break;
+    }
+
+    if (!closeApp)
+    {
+        mainMenuView.Return();
     }
 }

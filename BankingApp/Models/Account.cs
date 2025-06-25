@@ -1,25 +1,17 @@
 namespace BankingApp.Models;
 
-public class Account
+public class Account(string name, decimal balance = 0)
 {
-    public string AccountNumber { get; }
-    public string Name { get; }
-    public decimal Balance { get; private set; }
+    public Guid Id { get; } = Guid.NewGuid();
+    public string Name { get; } = name;
+    public decimal Balance { get; set; } = balance;
 
-    public Account(string name, decimal balance = 0)
-    {
-        Name = name;
-        Balance = balance;
-        AccountNumber = Guid.NewGuid().ToString();
-    }   
+    public static readonly Account Empty = new Account("", Decimal.MinValue);
 
-    public void Deposit(decimal depositAmount)
+    public void Deconstruct(out Guid id, out string name, out decimal balance)
     {
-        Balance += depositAmount;
-    }
-    
-    public void Withdraw(decimal withdrawAmount)
-    {
-        Balance -= withdrawAmount;
+        id = Id;
+        name = Name;
+        balance = Balance;
     }
 }

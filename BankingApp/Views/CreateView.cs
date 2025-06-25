@@ -1,27 +1,40 @@
-﻿using BankingApp.Models;
+﻿using BankingApp.Controllers;
+using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public static class CreateView
+public class CreateView: IView<(Guid, string, decimal)>
 {
-    internal static string? CreateAccountMenu()
+    public void Show()
     {
-        Console.Clear();
-        Console.WriteLine("Account creation: \n");
+        Console.WriteLine("\nAccount creation: \n");
         Console.WriteLine("Please enter account holder's name: ");
-        return Console.ReadLine();
+        var name = Console.ReadLine();
+        if (BankController.Instance.TryCreateAccount(name, out var account))
+        {
+            Success(account);
+        }
+        else
+        {
+            Failure();
+        }
     }
 
-    internal static void CreateAccountInvalidName()
+    public void Success((Guid, string, decimal) details)
     {
-        Console.WriteLine("Name cannot be empty.");
+        var (id,
+            name,
+            balance) = details;
+        Console.WriteLine($"""
+                          New bank account created with the following details:
+                          Name of account holder: {name}
+                          Account's initial balance: {balance.ToString("C")}
+                          Account number used for access: {id}
+                          """);
     }
 
-    internal static void CreateAccountSuccess(Account newAccount)
+    public void Failure()
     {
-        Console.WriteLine("New bank account created with the following details: ");
-        Console.WriteLine($"Name of account holder: {newAccount.Name}");
-        Console.WriteLine($"Account's initial balance: ${newAccount.Balance}");
-        Console.WriteLine($"Account number used for access: {newAccount.AccountNumber}");
+        Console.WriteLine("Name cannot be empty or whitespace.");
     }
 }
