@@ -28,28 +28,27 @@ public class TransferView: IView<(decimal, decimal, decimal)>
             {
                 Console.WriteLine("Please enter transfer amount: ");
                 userInput = Console.ReadLine();
-                if (BankController.Instance.TryParseAmount(userInput, out var amount))
+                if (BankController.Instance.TryParseAmount(userInput, out var amount) && 
+                    AccountController.Instance.TryTransfer(amount, out var amountAndBalances))
                 {
-                    if (AccountController.Instance.TryTransfer(amount, out var amountAndBalances))
-                    {
-                        Success(amountAndBalances);
+                    Success(amountAndBalances);
 
-                        return;
-                    }
+                    return;
                 }
             }
         }
         
         Failure();
-
     }
     
     public void Success((decimal, decimal, decimal) amountAndBalances)
     {
-        (decimal amount, decimal senderBalance, decimal receiverBalance) = amountAndBalances;
-        Console.WriteLine($"{amount:C} successfully transferred.");
-        Console.WriteLine($"Current sender balance: {senderBalance:C}");
-        Console.WriteLine($"Current receiver balance: {receiverBalance:C}");
+        var (amount, senderBalance, receiverBalance) = amountAndBalances;
+        Console.WriteLine($"""
+            {amount:C} successfully transferred.");
+            Console.WriteLine($"Current sender balance: {senderBalance:C});
+            Console.WriteLine($"Current receiver balance: {receiverBalance:C} 
+            """);
     }
 
     public void Failure()

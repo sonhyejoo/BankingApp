@@ -26,11 +26,11 @@ public class CreateView: IView<(Guid, string, decimal)>
             name,
             balance) = details;
         Console.WriteLine($"""
-                          New bank account created with the following details:
-                          Name of account holder: {name}
-                          Account's initial balance: {balance.ToString("C")}
-                          Account number used for access: {id}
-                          """);
+            New bank account created with the following details:
+            Name of account holder: {name}
+            Account's initial balance: {balance:C}
+            Account number used for access: {id}
+            """);
     }
 
     public void Failure()

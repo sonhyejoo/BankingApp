@@ -5,11 +5,11 @@ using BankingApp.Views;
 
 bool closeApp = false;
 var mainMenuView = new MainMenuView();
-while (!closeApp)
+while (true)
 {
     mainMenuView.Show();
     Console.WriteLine("Type your selection: ");
-    string? input = Console.ReadLine();
+    var input = Console.ReadLine();
 
     switch (input)
     {
@@ -35,15 +35,11 @@ while (!closeApp)
             break;
         case "q":
             Console.WriteLine("Shutting down.");
-            closeApp = true;
-            break;
+            return;
         default:
             Console.WriteLine("Please enter a valid selection.");
             break;
     }
 
-    if (!closeApp)
-    {
-        mainMenuView.Return();
-    }
+    mainMenuView.Return();
 }

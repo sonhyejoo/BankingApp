@@ -14,14 +14,12 @@ public class DepositView: IView<(decimal, decimal)>
         {
             Console.WriteLine("Please enter deposit amount: ");
             userInput = Console.ReadLine();
-            if (BankController.Instance.TryParseAmount(userInput, out var amount))
+            if (BankController.Instance.TryParseAmount(userInput, out var amount) &&
+                AccountController.Instance.TryDeposit(amount, out var amountAndBalance))
             {
-                if (AccountController.Instance.TryDeposit(amount, out var amountAndBalance))
-                {
-                    Success(amountAndBalance);
-                    
-                    return;
-                }
+                Success(amountAndBalance);
+
+                return;
             }
         }
         
@@ -31,8 +29,10 @@ public class DepositView: IView<(decimal, decimal)>
     public void Success((decimal, decimal) values)
     {
         var (depositAmount, balance) = values;
-        Console.WriteLine($"${depositAmount} successfully deposited.");
-        Console.WriteLine($"Current balance: {balance:C}");
+        Console.WriteLine($"""
+            ${depositAmount:C} successfully deposited.");
+            Current balance: {balance:C} 
+            """);
     }
     
     public void Failure()

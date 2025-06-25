@@ -11,13 +11,13 @@ public class CheckBalanceView: IView<decimal>
         Console.WriteLine("Checking balance...");
         Console.WriteLine("Please enter account id: ");
         var userInput = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(userInput))
+        if (BankController.Instance.TryGetAccount(userInput))
         {
-            Failure();
+            Success(AccountController.Instance.GetBalance());
         }
         else
         {
-            Success(AccountController.Instance.GetBalance());
+            Failure();
         }
     }
 

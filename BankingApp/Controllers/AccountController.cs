@@ -32,6 +32,7 @@ public class AccountController() : Singleton<AccountController>
         }
 
         amountAndBalance = default;
+        
         return false;
     }
 
@@ -46,6 +47,7 @@ public class AccountController() : Singleton<AccountController>
         }
 
         amountAndBalance = default;
+        
         return false;
     }
 
@@ -58,10 +60,12 @@ public class AccountController() : Singleton<AccountController>
             Account.Balance += amount;
 
             amountAndBalances = (amount, PreviousAccount.Balance, Account.Balance);
+            
             return true;
         }
 
         amountAndBalances = default;
+        
         return false;
     }
 }

@@ -19,7 +19,6 @@ public class BankController: Singleton<BankController>
         var acct = new Account(name);
         _accounts.Add(acct);
         account = (acct.Id, acct.Name, acct.Balance);
-        // account = acct;
 
         return true;
     }
@@ -64,6 +63,7 @@ public class BankController: Singleton<BankController>
         }
 
         amount = 0;
+        
         return false;
     }
 }
