@@ -8,8 +8,7 @@ public class CheckBalanceView: IView<decimal>
 {
     public void Show()
     {
-        Console.WriteLine("Checking balance...");
-        Console.WriteLine("Please enter account id: ");
+        Console.WriteLine("\nChecking balance: \nPlease enter account id:");
         var userInput = Console.ReadLine();
         if (BankController.Instance.TryGetAccount(userInput))
         {

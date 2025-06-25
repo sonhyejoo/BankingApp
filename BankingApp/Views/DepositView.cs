@@ -7,8 +7,7 @@ public class DepositView: IView<(decimal, decimal)>
 {
     public void Show()
     {
-        Console.WriteLine("\nDeposit Funds: \n");
-        Console.WriteLine("Please enter account id: ");
+        Console.WriteLine("\nDeposit Funds: \nPlease enter account id: ");
         var userInput = Console.ReadLine();
         if (!BankController.Instance.TryGetAccount(userInput))
         {
@@ -32,11 +31,12 @@ public class DepositView: IView<(decimal, decimal)>
 
     public void Success((decimal, decimal) values)
     {
-        var (depositAmount, balance) = values;
+        var (depositAmount, 
+            balance) = values;
         Console.WriteLine($"""
-            ${depositAmount:C} successfully deposited.");
-            Current balance: {balance:C} 
-            """);
+                           {depositAmount:C} successfully deposited.");
+                           Current balance: {balance:C} 
+                           """);
     }
     
     public void Failure()

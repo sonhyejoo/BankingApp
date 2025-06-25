@@ -7,8 +7,7 @@ public class CreateView: IView<(Guid, string, decimal)>
 {
     public void Show()
     {
-        Console.WriteLine("\nAccount creation: \n");
-        Console.WriteLine("Please enter account holder's name: ");
+        Console.WriteLine("\nAccount creation: \nPlease enter account holder's name: ");
         var name = Console.ReadLine();
         if (BankController.Instance.TryCreateAccount(name, out var account))
         {
@@ -26,11 +25,11 @@ public class CreateView: IView<(Guid, string, decimal)>
             name,
             balance) = details;
         Console.WriteLine($"""
-            New bank account created with the following details:
-            Name of account holder: {name}
-            Account's initial balance: {balance:C}
-            Account number used for access: {id}
-            """);
+                           New bank account created with the following details:
+                           Name of account holder: {name}
+                           Account's initial balance: {balance:C}
+                           Account number used for access: {id}
+                           """);
     }
 
     public void Failure()

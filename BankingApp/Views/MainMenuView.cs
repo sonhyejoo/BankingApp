@@ -7,13 +7,15 @@ public class MainMenuView
     public void Show()
     {
         Console.Clear();
-        Console.WriteLine("Select an option: ");
-        Console.WriteLine("1. Create account");
-        Console.WriteLine("2. Deposit");
-        Console.WriteLine("3. Withdraw");
-        Console.WriteLine("4. Check balance");
-        Console.WriteLine("5. Transfer funds");
-        Console.WriteLine("Press q to quit");
+        Console.WriteLine("""
+                          Select an option: 
+                          1. Create account
+                          2. Deposit
+                          3. Withdraw
+                          4. Check balance
+                          5. Transfer funds
+                          Press q to quit
+                          """);
     }
 
 
