@@ -12,18 +12,22 @@ public class WithdrawView: IView<(decimal, decimal)>
         var userInput = Console.ReadLine();
         if (BankController.Instance.TryGetAccount(userInput))
         {
-            Console.WriteLine("Please enter withdrawal amount: ");
-            userInput = Console.ReadLine();
-            if (BankController.Instance.TryParseAmount(userInput, out var amount) &&
-                AccountController.Instance.TryWithdraw(amount, out var amountAndBalance))
-            {
-                Success(amountAndBalance);
-                
-                return;
-            }
+            Failure();
+
+            return;
         }
         
-        Failure();
+        Console.WriteLine("Please enter withdrawal amount: ");
+        userInput = Console.ReadLine();
+        if (!(BankController.Instance.TryParseAmount(userInput, out var amount) &&
+            AccountController.Instance.TryWithdraw(amount, out var amountAndBalance)))
+        {
+            Failure();
+
+            return;
+        }
+        
+        Success(amountAndBalance);
     }
 
     public void Success((decimal, decimal) amountAndBalance)

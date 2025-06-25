@@ -20,25 +20,33 @@ public class TransferView: IView<(decimal, decimal, decimal)>
         Console.WriteLine("Sender's account information: ");
         Console.WriteLine("Please enter sender id: ");
         var userInput = Console.ReadLine();
-        if (BankController.Instance.TryGetAccount(userInput))
+        if (!BankController.Instance.TryGetAccount(userInput))
         {
-            Console.WriteLine("Please enter receiver id: ");
-            userInput = Console.ReadLine();
-            if (BankController.Instance.TryGetAccount(userInput))
-            {
-                Console.WriteLine("Please enter transfer amount: ");
-                userInput = Console.ReadLine();
-                if (BankController.Instance.TryParseAmount(userInput, out var amount) && 
-                    AccountController.Instance.TryTransfer(amount, out var amountAndBalances))
-                {
-                    Success(amountAndBalances);
+            Failure();
 
-                    return;
-                }
-            }
+            return;
+        }
+
+        Console.WriteLine("Please enter receiver id: ");
+        userInput = Console.ReadLine();
+        if (!BankController.Instance.TryGetAccount(userInput))
+        {
+            Failure();
+
+            return;
+        }
+
+        Console.WriteLine("Please enter transfer amount: ");
+        userInput = Console.ReadLine();
+        if (!(BankController.Instance.TryParseAmount(userInput, out var amount) && 
+                AccountController.Instance.TryTransfer(amount, out var amountAndBalances)))
+        {
+            Failure();
+
+            return;
         }
         
-        Failure();
+        Success(amountAndBalances);
     }
     
     public void Success((decimal, decimal, decimal) amountAndBalances)

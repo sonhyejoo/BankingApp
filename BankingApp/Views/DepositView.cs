@@ -10,20 +10,24 @@ public class DepositView: IView<(decimal, decimal)>
         Console.WriteLine("\nDeposit Funds: \n");
         Console.WriteLine("Please enter account id: ");
         var userInput = Console.ReadLine();
-        if (BankController.Instance.TryGetAccount(userInput))
+        if (!BankController.Instance.TryGetAccount(userInput))
         {
-            Console.WriteLine("Please enter deposit amount: ");
-            userInput = Console.ReadLine();
-            if (BankController.Instance.TryParseAmount(userInput, out var amount) &&
-                AccountController.Instance.TryDeposit(amount, out var amountAndBalance))
-            {
-                Success(amountAndBalance);
+            Failure();
 
-                return;
-            }
+            return;
+        }
+
+        Console.WriteLine("Please enter deposit amount: ");
+        userInput = Console.ReadLine();
+        if (!(BankController.Instance.TryParseAmount(userInput, out var amount) &&
+            AccountController.Instance.TryDeposit(amount, out var amountAndBalance)))
+        {
+            Failure();
+
+            return;
         }
         
-        Failure();
+        Success(amountAndBalance);
     }
 
     public void Success((decimal, decimal) values)
