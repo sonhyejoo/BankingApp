@@ -53,9 +53,9 @@ public class TransferView: IView<(decimal, decimal, decimal)>
     {
         var (amount, senderBalance, receiverBalance) = amountAndBalances;
         Console.WriteLine($"""
-            {amount:C} successfully transferred.");
-            Console.WriteLine($"Current sender balance: {senderBalance:C});
-            Console.WriteLine($"Current receiver balance: {receiverBalance:C} 
+            {amount:C} successfully transferred."
+            Current sender balance: {senderBalance:C}
+            Current receiver balance: {receiverBalance:C} 
             """);
     }
 

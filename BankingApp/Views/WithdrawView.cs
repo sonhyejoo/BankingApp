@@ -10,7 +10,7 @@ public class WithdrawView: IView<(decimal, decimal)>
         Console.WriteLine("\nWithdraw Menu: \n");
         Console.WriteLine("Please enter account id: ");
         var userInput = Console.ReadLine();
-        if (BankController.Instance.TryGetAccount(userInput))
+        if (!BankController.Instance.TryGetAccount(userInput))
         {
             Failure();
 
@@ -35,7 +35,7 @@ public class WithdrawView: IView<(decimal, decimal)>
         var (amount, balance) = amountAndBalance;
         Console.WriteLine($"""
             {amount:C} successfully withdrawn.
-            $"Current balance: ${balance:C}" 
+            Current balance: {balance:C}" 
             """);
     }
 
