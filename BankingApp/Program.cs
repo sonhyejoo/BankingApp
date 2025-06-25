@@ -3,7 +3,6 @@
 using BankingApp.Controllers;
 using BankingApp.Views;
 
-bool closeApp = false;
 var mainMenuView = new MainMenuView();
 while (true)
 {
