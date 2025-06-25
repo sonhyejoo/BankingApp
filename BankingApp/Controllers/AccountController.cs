@@ -5,8 +5,6 @@ namespace BankingApp.Controllers;
 
 public class AccountController() : Singleton<AccountController>
 {
-    // public Account Account = Account.Empty;
-
     private Account _account = Account.Empty;
     
     public Account Account 
