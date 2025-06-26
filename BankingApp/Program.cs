@@ -8,9 +8,9 @@ while (true)
 {
     mainMenuView.Show();
     Console.WriteLine("Type your selection: ");
-    var input = Console.ReadLine();
+    var userSelection = Console.ReadLine();
 
-    switch (input)
+    switch (userSelection)
     {
         case "1":
             var createView = new CreateView();

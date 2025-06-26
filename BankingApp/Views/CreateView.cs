@@ -32,8 +32,5 @@ public class CreateView: IView<(Guid, string, decimal)>
                            """);
     }
 
-    public void Failure()
-    {
-        Console.WriteLine("Name cannot be empty or whitespace.");
-    }
+    public void Failure() => Console.WriteLine("Name cannot be empty or whitespace.");
 }

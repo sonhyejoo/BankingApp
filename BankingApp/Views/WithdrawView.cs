@@ -8,8 +8,8 @@ public class WithdrawView: IView<(decimal, decimal)>
     public void Show()
     {
         Console.WriteLine("\nWithdraw Menu: \nPlease enter account id: ");
-        var userInput = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(userInput))
+        var id = Console.ReadLine();
+        if (!BankController.Instance.TryGetAccount(id))
         {
             Failure();
 
@@ -17,24 +17,24 @@ public class WithdrawView: IView<(decimal, decimal)>
         }
         
         Console.WriteLine("Please enter withdrawal amount: ");
-        userInput = Console.ReadLine();
-        if (!(BankController.Instance.TryParseAmount(userInput, out var amount) &&
-            AccountController.Instance.TryWithdraw(amount, out var amountAndBalance)))
+        var amount = Console.ReadLine();
+        if (!(BankController.Instance.TryParseAmount(amount, out var withdrawAmount) &&
+            AccountController.Instance.TryWithdraw(withdrawAmount, out var withdrawAmountAndBalance)))
         {
             Failure();
 
             return;
         }
         
-        Success(amountAndBalance);
+        Success(withdrawAmountAndBalance);
     }
 
     public void Success((decimal, decimal) amountAndBalance)
     {
-        var (amount, 
+        var (withdrawAmount, 
             balance) = amountAndBalance;
         Console.WriteLine($"""
-                           {amount:C} successfully withdrawn.
+                           {withdrawAmount:C} successfully withdrawn.
                            Current balance: {balance:C}
                            """);
     }
@@ -43,5 +43,4 @@ public class WithdrawView: IView<(decimal, decimal)>
     {
         Console.WriteLine("Withdrawal unsuccessful.");
     }
-
 }

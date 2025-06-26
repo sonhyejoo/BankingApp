@@ -23,46 +23,48 @@ public class BankController: Singleton<BankController>
         return true;
     }
 
-    public bool TryParseId(string? userInput, out Guid? id)
+    public bool TryParseId(string? idToParse, out Guid? parsedId)
     {
-        if (Guid.TryParse(userInput, out var guid))
+        if (Guid.TryParse(idToParse, out var guid))
         {
-            id = guid;
+            parsedId = guid;
 
             return true;
         }
 
-        id = null;
+        parsedId = null;
 
         return false;
     }
 
-    public bool TryGetAccount(string? userInput)
+    public bool TryGetAccount(string? idToParse)
     {
-        if (TryParseId(userInput, out var id))
+        if (!TryParseId(idToParse, out var parsedId))
         {
-            var foundAccount = _accounts.FirstOrDefault(a => a.Id == id);
-            if (foundAccount is not null)
-            {
-                AccountController.Instance.Account = foundAccount;
-
-                return true;
-            }
+            return false;
         }
 
-        return false;
+        var foundAccount = _accounts.FirstOrDefault(a => a.Id == parsedId);
+        if (foundAccount is null)
+        {
+            return false;
+        }
+
+        AccountController.Instance.Account = foundAccount;
+
+        return true;
     }
     
-    public bool TryParseAmount(string? userInput, out decimal amount)
+    public bool TryParseAmount(string? amountToParse, out decimal parsedAmount)
     {
-        if (decimal.TryParse(userInput, out var parsedAmount))
+        if (decimal.TryParse(amountToParse, out var amount))
         {
-            amount = parsedAmount;
+            parsedAmount =  amount;
             
             return true;
         }
 
-        amount = 0;
+        parsedAmount = 0;
         
         return false;
     }

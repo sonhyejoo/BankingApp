@@ -8,8 +8,8 @@ public class DepositView: IView<(decimal, decimal)>
     public void Show()
     {
         Console.WriteLine("\nDeposit Funds: \nPlease enter account id: ");
-        var userInput = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(userInput))
+        var id = Console.ReadLine();
+        if (!BankController.Instance.TryGetAccount(id))
         {
             Failure();
 
@@ -17,16 +17,16 @@ public class DepositView: IView<(decimal, decimal)>
         }
 
         Console.WriteLine("Please enter deposit amount: ");
-        userInput = Console.ReadLine();
-        if (!(BankController.Instance.TryParseAmount(userInput, out var amount) &&
-            AccountController.Instance.TryDeposit(amount, out var amountAndBalance)))
+        var amount = Console.ReadLine();
+        if (!(BankController.Instance.TryParseAmount(amount, out var depositAmount) &&
+            AccountController.Instance.TryDeposit(depositAmount, out var depositAmountAndBalance)))
         {
             Failure();
 
             return;
         }
         
-        Success(amountAndBalance);
+        Success(depositAmountAndBalance);
     }
 
     public void Success((decimal, decimal) values)

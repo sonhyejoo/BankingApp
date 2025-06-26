@@ -9,8 +9,8 @@ public class CheckBalanceView: IView<decimal>
     public void Show()
     {
         Console.WriteLine("\nChecking balance: \nPlease enter account id:");
-        var userInput = Console.ReadLine();
-        if (BankController.Instance.TryGetAccount(userInput))
+        var id = Console.ReadLine();
+        if (BankController.Instance.TryGetAccount(id))
         {
             Success(AccountController.Instance.GetBalance());
         }
@@ -29,5 +29,4 @@ public class CheckBalanceView: IView<decimal>
     {
         Console.WriteLine("Invalid id entered. Account not found.");
     }
-
 }

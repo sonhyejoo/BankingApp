@@ -12,8 +12,8 @@ public class TransferView: IView<(decimal, decimal, decimal)>
                           Sender's account information: 
                           Please enter sender id:
                           """);
-        var userInput = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(userInput))
+        var senderId = Console.ReadLine();
+        if (!BankController.Instance.TryGetAccount(senderId))
         {
             Failure();
 
@@ -21,8 +21,8 @@ public class TransferView: IView<(decimal, decimal, decimal)>
         }
 
         Console.WriteLine("Please enter receiver id: ");
-        userInput = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(userInput))
+        var receiverId = Console.ReadLine();
+        if (!BankController.Instance.TryGetAccount(receiverId))
         {
             Failure();
 
@@ -30,25 +30,25 @@ public class TransferView: IView<(decimal, decimal, decimal)>
         }
 
         Console.WriteLine("Please enter transfer amount: ");
-        userInput = Console.ReadLine();
-        if (!(BankController.Instance.TryParseAmount(userInput, out var amount) && 
-                AccountController.Instance.TryTransfer(amount, out var amountAndBalances)))
+        var amount = Console.ReadLine();
+        if (!(BankController.Instance.TryParseAmount(amount, out var transferAmount) && 
+                AccountController.Instance.TryTransfer(transferAmount, out var transferAmountAndBalances)))
         {
             Failure();
 
             return;
         }
         
-        Success(amountAndBalances);
+        Success(transferAmountAndBalances);
     }
     
     public void Success((decimal, decimal, decimal) amountAndBalances)
     {
-        var (amount, 
+        var (transferAmount, 
             senderBalance, 
             receiverBalance) = amountAndBalances;
         Console.WriteLine($"""
-                           {amount:C} successfully transferred.
+                           {transferAmount:C} successfully transferred.
                            Current sender balance: {senderBalance:C}
                            Current receiver balance: {receiverBalance:C} 
                            """);
