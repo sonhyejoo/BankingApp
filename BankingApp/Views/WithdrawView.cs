@@ -35,7 +35,7 @@ public class WithdrawView: IView<(decimal, decimal)>
             balance) = amountAndBalance;
         Console.WriteLine($"""
                            {amount:C} successfully withdrawn.
-                           Current balance: {balance:C}" 
+                           Current balance: {balance:C}
                            """);
     }
 

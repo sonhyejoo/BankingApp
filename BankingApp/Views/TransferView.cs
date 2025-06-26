@@ -8,7 +8,7 @@ public class TransferView: IView<(decimal, decimal, decimal)>
     public void Show()
     {
         Console.WriteLine("""
-                          Transfer Funds Menu: \n");
+                          Transfer Funds Menu:
                           Sender's account information: 
                           Please enter sender id:
                           """);
@@ -48,7 +48,7 @@ public class TransferView: IView<(decimal, decimal, decimal)>
             senderBalance, 
             receiverBalance) = amountAndBalances;
         Console.WriteLine($"""
-                           {amount:C} successfully transferred."
+                           {amount:C} successfully transferred.
                            Current sender balance: {senderBalance:C}
                            Current receiver balance: {receiverBalance:C} 
                            """);

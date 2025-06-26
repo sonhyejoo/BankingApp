@@ -34,7 +34,7 @@ public class DepositView: IView<(decimal, decimal)>
         var (depositAmount, 
             balance) = values;
         Console.WriteLine($"""
-                           {depositAmount:C} successfully deposited.");
+                           {depositAmount:C} successfully deposited.
                            Current balance: {balance:C} 
                            """);
     }
