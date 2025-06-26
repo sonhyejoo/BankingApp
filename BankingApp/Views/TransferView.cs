@@ -3,7 +3,7 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class TransferView: IView<(decimal, decimal, decimal)>
+public class TransferView: ITransactionView<(decimal, decimal, decimal)>
 {
     public void Show()
     {
@@ -13,7 +13,7 @@ public class TransferView: IView<(decimal, decimal, decimal)>
                           Please enter sender id:
                           """);
         var senderId = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(senderId))
+        if (!BankController.Instance.TrySetAccount(senderId))
         {
             Failure();
 
@@ -22,7 +22,7 @@ public class TransferView: IView<(decimal, decimal, decimal)>
 
         Console.WriteLine("Please enter receiver id: ");
         var receiverId = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(receiverId))
+        if (!BankController.Instance.TrySetAccount(receiverId))
         {
             Failure();
 

@@ -1,8 +1,6 @@
 ﻿namespace BankingApp.Interfaces;
 
-public interface IView<in T>
+public interface IView
 {
     void Show();
-    void Success(T? value);
-    void Failure();
 }

@@ -3,13 +3,13 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class DepositView: IView<(decimal, decimal)>
+public class DepositView: ITransactionView<(decimal, decimal)>
 {
     public void Show()
     {
         Console.WriteLine("\nDeposit Funds: \nPlease enter account id: ");
         var id = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(id))
+        if (!BankController.Instance.TrySetAccount(id))
         {
             Failure();
 

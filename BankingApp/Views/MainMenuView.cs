@@ -1,8 +1,9 @@
-﻿using BankingApp.Models;
+﻿using BankingApp.Interfaces;
+using BankingApp.Models;
 
 namespace BankingApp.Views;
 
-public class MainMenuView
+public class MainMenuView: IView
 {
     public void Show()
     {

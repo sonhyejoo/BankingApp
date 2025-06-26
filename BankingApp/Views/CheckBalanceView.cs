@@ -4,13 +4,13 @@ using BankingApp.Models;
 
 namespace BankingApp.Views;
 
-public class CheckBalanceView: IView<decimal>
+public class CheckBalanceView: ITransactionView<decimal>
 {
     public void Show()
     {
         Console.WriteLine("\nChecking balance: \nPlease enter account id:");
         var id = Console.ReadLine();
-        if (BankController.Instance.TryGetAccount(id))
+        if (BankController.Instance.TrySetAccount(id))
         {
             Success(AccountController.Instance.GetBalance());
         }

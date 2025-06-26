@@ -3,13 +3,13 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class WithdrawView: IView<(decimal, decimal)>
+public class WithdrawView: ITransactionView<(decimal, decimal)>
 {
     public void Show()
     {
         Console.WriteLine("\nWithdraw Menu: \nPlease enter account id: ");
         var id = Console.ReadLine();
-        if (!BankController.Instance.TryGetAccount(id))
+        if (!BankController.Instance.TrySetAccount(id))
         {
             Failure();
 
