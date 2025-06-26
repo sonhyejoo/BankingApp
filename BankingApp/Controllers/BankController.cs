@@ -22,24 +22,10 @@ public class BankController: Singleton<BankController>
 
         return true;
     }
-
-    public bool TryParseId(string? idToParse, out Guid? parsedId)
-    {
-        if (Guid.TryParse(idToParse, out var guid))
-        {
-            parsedId = guid;
-
-            return true;
-        }
-
-        parsedId = null;
-
-        return false;
-    }
-
+    
     public bool TryGetAccount(string? idToParse)
     {
-        if (!TryParseId(idToParse, out var parsedId))
+        if (!Guid.TryParse(idToParse, out var parsedId))
         {
             return false;
         }
