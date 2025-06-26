@@ -14,8 +14,9 @@ while (true)
                       4. Check balance
                       5. Transfer funds
                       Press q to quit
+                      
+                      Type your selection:
                       """);
-    Console.WriteLine("Type your selection: ");
     var userSelection = Console.ReadLine();
 
     switch (userSelection)
