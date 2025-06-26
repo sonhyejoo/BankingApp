@@ -39,8 +39,5 @@ public class WithdrawView: IView<(decimal, decimal)>
                            """);
     }
 
-    public void Failure()
-    {
-        Console.WriteLine("Withdrawal unsuccessful.");
-    }
+    public void Failure() => Console.WriteLine("Withdrawal unsuccessful.");
 }

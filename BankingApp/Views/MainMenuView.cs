@@ -7,7 +7,7 @@ public class MainMenuView
     public void Show()
     {
         Console.WriteLine("""
-                          
+
                           Select an option: 
                           1. Create account
                           2. Deposit

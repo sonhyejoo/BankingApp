@@ -20,13 +20,7 @@ public class CheckBalanceView: IView<decimal>
         }
     }
 
-    public void Success(decimal balance)
-    {
-        Console.WriteLine($"Current balance is: {balance:C}");
-    }
+    public void Success(decimal balance) => Console.WriteLine($"Current balance is: {balance:C}");
 
-    public void Failure()
-    {
-        Console.WriteLine("Invalid id entered. Account not found.");
-    }
+    public void Failure() => Console.WriteLine("Invalid id entered. Account not found.");
 }

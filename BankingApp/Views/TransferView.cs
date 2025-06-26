@@ -54,8 +54,5 @@ public class TransferView: IView<(decimal, decimal, decimal)>
                            """);
     }
 
-    public void Failure()
-    {
-        Console.WriteLine("Transfer unsuccessful.");
-    }
+    public void Failure() => Console.WriteLine("Transfer unsuccessful.");
 }

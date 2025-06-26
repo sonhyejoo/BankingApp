@@ -39,8 +39,5 @@ public class DepositView: IView<(decimal, decimal)>
                            """);
     }
     
-    public void Failure()
-    {
-        Console.WriteLine("Deposit unsuccessful.");
-    }
+    public void Failure() => Console.WriteLine("Deposit unsuccessful.");
 }
