@@ -3,32 +3,20 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class WithdrawView: IView<(decimal, decimal)>
+public class WithdrawView: ITransactionView<(decimal, decimal)>
 {
-    public void Show()
+    public string? GetNameOrId()
     {
         Console.WriteLine("\nWithdraw Menu: \nPlease enter account id: ");
-        var id = Console.ReadLine();
-        if (!BankController.Instance.TrySetAccount(id))
-        {
-            Failure();
-
-            return;
-        }
-        
-        Console.WriteLine("Please enter withdrawal amount: ");
-        var amount = Console.ReadLine();
-        if (!(BankController.Instance.TryParseAmount(amount, out var withdrawAmount) &&
-            AccountController.Instance.TryWithdraw(withdrawAmount, out var withdrawAmountAndBalance)))
-        {
-            Failure();
-
-            return;
-        }
-        
-        Success(withdrawAmountAndBalance);
+        return Console.ReadLine();
     }
-
+    
+    public string? GetAmount()
+    {
+        Console.WriteLine("Please enter withdrawal amount: ");
+        return Console.ReadLine();
+    }
+    
     public void Success((decimal, decimal) amountAndBalance)
     {
         var (withdrawAmount, 

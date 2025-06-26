@@ -2,7 +2,7 @@
 
 public interface IView<in T>
 {
-    void Show();
+    string? GetNameOrId();
     void Success(T? value);
     void Failure();
 }

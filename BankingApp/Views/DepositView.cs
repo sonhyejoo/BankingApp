@@ -3,30 +3,19 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class DepositView: IView<(decimal, decimal)>
+public class DepositView: ITransactionView<(decimal, decimal)>
 {
-    public void Show()
+    public string? GetNameOrId()
     {
         Console.WriteLine("\nDeposit Funds: \nPlease enter account id: ");
-        var id = Console.ReadLine();
-        if (!BankController.Instance.TrySetAccount(id))
-        {
-            Failure();
+        return Console.ReadLine();
 
-            return;
-        }
+    }
 
+    public string? GetAmount()
+    {
         Console.WriteLine("Please enter deposit amount: ");
-        var amount = Console.ReadLine();
-        if (!(BankController.Instance.TryParseAmount(amount, out var depositAmount) &&
-            AccountController.Instance.TryDeposit(depositAmount, out var depositAmountAndBalance)))
-        {
-            Failure();
-
-            return;
-        }
-        
-        Success(depositAmountAndBalance);
+        return Console.ReadLine();
     }
 
     public void Success((decimal, decimal) values)

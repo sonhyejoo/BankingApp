@@ -5,18 +5,10 @@ namespace BankingApp.Views;
 
 public class CreateView: IView<(Guid, string, decimal)>
 {
-    public void Show()
+    public string? GetNameOrId()
     {
         Console.WriteLine("\nAccount creation: \nPlease enter account holder's name: ");
-        var name = Console.ReadLine();
-        if (BankController.Instance.TryCreateAccount(name, out var account))
-        {
-            Success(account);
-        }
-        else
-        {
-            Failure();
-        }
+        return Console.ReadLine();
     }
 
     public void Success((Guid, string, decimal) details)

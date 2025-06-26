@@ -3,10 +3,10 @@ using BankingApp.Utils;
 
 namespace BankingApp.Controllers;
 
-public class BankController: Singleton<BankController>
+public class BankController(AllAccounts accounts)//: Singleton<BankController>
 {
-    private readonly List<Account> _accounts = new();
-    
+    private AllAccounts _accounts = accounts;
+
     public bool TryCreateAccount(string? name, out (Guid, string, decimal) account)
     {
         if (string.IsNullOrWhiteSpace(name) || string.IsNullOrEmpty(name))
@@ -17,7 +17,7 @@ public class BankController: Singleton<BankController>
         }
 
         var acct = new Account(name);
-        _accounts.Add(acct);
+        _accounts.AccountList.Add(acct);
         account = (acct.Id, acct.Name, acct.Balance);
 
         return true;
@@ -30,28 +30,14 @@ public class BankController: Singleton<BankController>
             return false;
         }
 
-        var foundAccount = _accounts.FirstOrDefault(a => a.Id == parsedId);
+        var foundAccount = _accounts.AccountList.FirstOrDefault(a => a.Id == parsedId);
         if (foundAccount is null)
         {
             return false;
         }
 
-        AccountController.Instance.Account = foundAccount;
+        _accounts.ActiveAccount = foundAccount;
 
         return true;
-    }
-    
-    public bool TryParseAmount(string? amountToParse, out decimal parsedAmount)
-    {
-        if (decimal.TryParse(amountToParse, out var amount))
-        {
-            parsedAmount =  amount;
-            
-            return true;
-        }
-
-        parsedAmount = 0;
-        
-        return false;
     }
 }

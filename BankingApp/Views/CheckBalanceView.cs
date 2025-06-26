@@ -6,18 +6,10 @@ namespace BankingApp.Views;
 
 public class CheckBalanceView: IView<decimal>
 {
-    public void Show()
+    public string? GetNameOrId()
     {
         Console.WriteLine("\nChecking balance: \nPlease enter account id:");
-        var id = Console.ReadLine();
-        if (BankController.Instance.TrySetAccount(id))
-        {
-            Success(AccountController.Instance.GetBalance());
-        }
-        else
-        {
-            Failure();
-        }
+        return Console.ReadLine();
     }
 
     public void Success(decimal balance) => Console.WriteLine($"Current balance is: {balance:C}");

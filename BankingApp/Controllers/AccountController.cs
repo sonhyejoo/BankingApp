@@ -1,32 +1,17 @@
 ﻿using BankingApp.Models;
-using BankingApp.Utils;
 
 namespace BankingApp.Controllers;
 
-public class AccountController() : Singleton<AccountController>
+public class AccountController(Account account, Account? receiverAccount = null)// : Singleton<AccountController>
 {
-    private Account _account = Account.Empty;
-    
-    public Account Account 
-    {
-        get => _account;
-        set
-        {
-            PreviousAccount = _account;
-            _account = value;
-        }
-    }
-
-    private Account PreviousAccount { get; set; } = Account.Empty;
-
-    public decimal GetBalance() => Account.Balance;
+    public decimal GetBalance() => account.Balance;
 
     public bool TryDeposit(decimal amount, out (decimal depositAmount, decimal balance) amountAndBalance)
     {
         if (amount > 0)
         {
-            Account.Balance += amount;
-            amountAndBalance = (amount, Account.Balance);
+            account.Balance += amount;
+            amountAndBalance = (amount, account.Balance);
             
             return true;
         }
@@ -38,10 +23,10 @@ public class AccountController() : Singleton<AccountController>
 
     public bool TryWithdraw(decimal amount, out (decimal depositAmount, decimal balance) amountAndBalance)
     {
-        if (amount > 0 && amount <= Account.Balance)
+        if (amount > 0 && amount <= account.Balance)
         {
-            Account.Balance -= amount;
-            amountAndBalance = (amount, Account.Balance);
+            account.Balance -= amount;
+            amountAndBalance = (amount, account.Balance);
             
             return true;
         }
@@ -54,18 +39,21 @@ public class AccountController() : Singleton<AccountController>
     public bool TryTransfer(decimal amount,
         out (decimal transferAmount, decimal senderBalance, decimal receiverBalance) amountAndBalances)
     {
-        if (amount > 0 && amount <= PreviousAccount.Balance)
-        {
-            PreviousAccount.Balance -= amount;
-            Account.Balance += amount;
-
-            amountAndBalances = (amount, PreviousAccount.Balance, Account.Balance);
-            
-            return true;
-        }
-
-        amountAndBalances = default;
         
-        return false;
+        if (receiverAccount is null ||
+            account.Id == receiverAccount.Id ||
+            !(amount > 0 && amount <= receiverAccount.Balance))
+        {
+            amountAndBalances = default;
+        
+            return false;
+        }
+        
+        receiverAccount.Balance -= amount;
+        account.Balance += amount;
+
+        amountAndBalances = (amount, receiverAccount.Balance, account.Balance);
+        
+        return true;
     }
 }

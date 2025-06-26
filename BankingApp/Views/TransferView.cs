@@ -3,39 +3,18 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class TransferView: IView<(decimal, decimal, decimal)>
+public class TransferView: ITransactionView<(decimal, decimal, decimal)>
 {
-    public void Show()
+    public string? GetNameOrId()
     {
         Console.WriteLine("\nTransfer Funds Menu: \nSender's account information: \nPlease enter sender id:");
-        var senderId = Console.ReadLine();
-        if (!BankController.Instance.TrySetAccount(senderId))
-        {
-            Failure();
-
-            return;
-        }
-
-        Console.WriteLine("Please enter receiver id: ");
-        var receiverId = Console.ReadLine();
-        if (!BankController.Instance.TrySetAccount(receiverId))
-        {
-            Failure();
-
-            return;
-        }
-
+        return Console.ReadLine();
+    }
+    
+    public string? GetAmount()
+    {
         Console.WriteLine("Please enter transfer amount: ");
-        var amount = Console.ReadLine();
-        if (!(BankController.Instance.TryParseAmount(amount, out var transferAmount) && 
-                AccountController.Instance.TryTransfer(transferAmount, out var transferAmountAndBalances)))
-        {
-            Failure();
-
-            return;
-        }
-        
-        Success(transferAmountAndBalances);
+        return Console.ReadLine();
     }
     
     public void Success((decimal, decimal, decimal) amountAndBalances)
