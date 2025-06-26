@@ -3,10 +3,18 @@
 using BankingApp.Controllers;
 using BankingApp.Views;
 
-var mainMenuView = new MainMenuView();
 while (true)
 {
-    mainMenuView.Show();
+    Console.WriteLine("""
+
+                      Select an option: 
+                      1. Create account
+                      2. Deposit
+                      3. Withdraw
+                      4. Check balance
+                      5. Transfer funds
+                      Press q to quit
+                      """);
     Console.WriteLine("Type your selection: ");
     var userSelection = Console.ReadLine();
 
@@ -40,5 +48,6 @@ while (true)
             break;
     }
 
-    mainMenuView.Return();
+    Console.WriteLine("Press any button to return to main menu...");
+    Console.ReadKey();
 }

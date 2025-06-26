@@ -4,7 +4,7 @@ using BankingApp.Models;
 
 namespace BankingApp.Views;
 
-public class CheckBalanceView: ITransactionView<decimal>
+public class CheckBalanceView: IView<decimal>
 {
     public void Show()
     {

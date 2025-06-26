@@ -3,7 +3,7 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class CreateView: ITransactionView<(Guid, string, decimal)>
+public class CreateView: IView<(Guid, string, decimal)>
 {
     public void Show()
     {
