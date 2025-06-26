@@ -7,11 +7,7 @@ public class TransferView: IView<(decimal, decimal, decimal)>
 {
     public void Show()
     {
-        Console.WriteLine("""
-                          Transfer Funds Menu:
-                          Sender's account information: 
-                          Please enter sender id:
-                          """);
+        Console.WriteLine("\nTransfer Funds Menu: \nSender's account information: \nPlease enter sender id:");
         var senderId = Console.ReadLine();
         if (!BankController.Instance.TrySetAccount(senderId))
         {
