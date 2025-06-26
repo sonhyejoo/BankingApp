@@ -1,8 +1,7 @@
 ﻿namespace BankingApp.Interfaces;
 
-public interface IView<in T>
+public interface IFailable<in T>
 {
-    string? GetNameOrId();
     void Success(T? value);
     void Failure();
 }

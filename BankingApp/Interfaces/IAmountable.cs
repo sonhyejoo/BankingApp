@@ -1,6 +1,6 @@
 ﻿namespace BankingApp.Interfaces;
 
-public interface ITransactionView<in T>: IView<T>
+public interface IAmountable
 {
     string? GetAmount();
 }

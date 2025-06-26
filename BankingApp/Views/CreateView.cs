@@ -3,9 +3,9 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class CreateView: IView<(Guid, string, decimal)>
+public class CreateView: INameable, IFailable<(Guid, string, decimal)>
 {
-    public string? GetNameOrId()
+    public string? GetName()
     {
         Console.WriteLine("\nAccount creation: \nPlease enter account holder's name: ");
         return Console.ReadLine();

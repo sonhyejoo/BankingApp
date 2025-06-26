@@ -25,7 +25,7 @@ while (true)
     {
         case "1":
             var createView = new CreateView();
-            var createName = createView.GetNameOrId();
+            var createName = createView.GetName();
             if (!new BankController(allAccounts).TryCreateAccount(createName, out var createdAccount))
             {
                 createView.Failure();
@@ -37,7 +37,7 @@ while (true)
             break;
         case "2":
             var depositView = new DepositView();
-            var depositId = depositView.GetNameOrId();
+            var depositId = depositView.GetId();
             if (!new BankController(allAccounts).TrySetAccount(depositId))
             {
                 depositView.Failure();
@@ -57,7 +57,7 @@ while (true)
             break;
         case "3": 
             var withdrawView = new WithdrawView();
-            var withdrawId = withdrawView.GetNameOrId();
+            var withdrawId = withdrawView.GetId();
             if (!new BankController(allAccounts).TrySetAccount(withdrawId))
             {
                 withdrawView.Failure();
@@ -77,7 +77,7 @@ while (true)
             break;
         case "4":
             var checkBalanceView = new CheckBalanceView();
-            var balanceId = checkBalanceView.GetNameOrId();
+            var balanceId = checkBalanceView.GetId();
             if (!new BankController(allAccounts).TrySetAccount(balanceId))
             {                
                 checkBalanceView.Failure();
@@ -89,7 +89,7 @@ while (true)
             break;
         case "5":
             var transferView = new TransferView();
-            var senderId = transferView.GetNameOrId();
+            var senderId = transferView.GetId();
             if (!new BankController(allAccounts).TrySetAccount(senderId))
             {
                 transferView.Failure();

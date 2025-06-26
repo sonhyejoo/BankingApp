@@ -3,9 +3,9 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class WithdrawView: ITransactionView<(decimal, decimal)>
+public class WithdrawView: IAmountable, IIdentifiable, IFailable<(decimal, decimal)>
 {
-    public string? GetNameOrId()
+    public string? GetId()
     {
         Console.WriteLine("\nWithdraw Menu: \nPlease enter account id: ");
         return Console.ReadLine();

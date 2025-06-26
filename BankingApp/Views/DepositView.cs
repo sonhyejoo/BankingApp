@@ -3,9 +3,9 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class DepositView: ITransactionView<(decimal, decimal)>
+public class DepositView: IAmountable, IIdentifiable, IFailable<(decimal, decimal)>
 {
-    public string? GetNameOrId()
+    public string? GetId()
     {
         Console.WriteLine("\nDeposit Funds: \nPlease enter account id: ");
         return Console.ReadLine();

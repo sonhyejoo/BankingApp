@@ -3,9 +3,9 @@ using BankingApp.Interfaces;
 
 namespace BankingApp.Views;
 
-public class TransferView: ITransactionView<(decimal, decimal, decimal)>
+public class TransferView: IAmountable, IIdentifiable, IFailable<(decimal, decimal, decimal)>
 {
-    public string? GetNameOrId()
+    public string? GetId()
     {
         Console.WriteLine("\nTransfer Funds Menu: \nSender's account information: \nPlease enter sender id:");
         return Console.ReadLine();

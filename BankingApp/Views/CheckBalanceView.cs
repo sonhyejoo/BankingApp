@@ -4,9 +4,9 @@ using BankingApp.Models;
 
 namespace BankingApp.Views;
 
-public class CheckBalanceView: IView<decimal>
+public class CheckBalanceView: IIdentifiable, IFailable<decimal>
 {
-    public string? GetNameOrId()
+    public string? GetId()
     {
         Console.WriteLine("\nChecking balance: \nPlease enter account id:");
         return Console.ReadLine();
